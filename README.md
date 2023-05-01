@@ -4,7 +4,7 @@
 - Framework : Transformer
 - Dataset: MS COCO
 - Link: [Deep learning](https://github.com/Bao-Thanh/Image_Captioning/tree/main/DL/Image%20Captioning%20Transformer%20-%20COCO)
-- Link model: [model] (https://drive.google.com/file/d/1dVQJd_LxaBP3bicWwF8ZrVFSJ99I5xhu/view?usp=sharing)
+- Link model: [model](https://drive.google.com/file/d/1dVQJd_LxaBP3bicWwF8ZrVFSJ99I5xhu/view?usp=sharing)
 
 2. Back - end
 - Framework : FastAPI
