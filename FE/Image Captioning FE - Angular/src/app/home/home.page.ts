@@ -120,6 +120,7 @@ export class HomePage {
   async generateCaption() {
     if(!this.imgUrl) { return; }
     this.captionGenerated = true;
+    this.resultGenerated = false;
 
     let img_path
     // if (typeof this.imgUrl === 'string') {
