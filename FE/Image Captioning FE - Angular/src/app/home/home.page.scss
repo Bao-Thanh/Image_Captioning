@@ -1,0 +1,80 @@
+.mr-5 {
+  margin-right: 5px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.caption {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 380px;
+  background: #eee;
+  border-top: 3px solid #aaa;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  animation: animatop 1.2s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
+  overflow: scroll;
+
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+
+    ion-icon {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #f00;
+      padding: 5px;
+      border: 1px solid #777;
+      border-radius: 15px;
+    }
+  }
+
+  .content {
+    width: 80%;
+    margin: auto;
+    padding: 20px 10px;
+    line-height: 2;
+    letter-spacing: 2.4px;
+    color: #063c52;
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+}
+
+@keyframes animatop {
+  0% {
+      opacity: 0;
+      bottom: -500px;
+  }
+  100% {
+      opacity: 1;
+      bottom: 0px;
+  }
+}
+
+@keyframes animainfos {
+  0% {
+      bottom: 10px;
+  }
+  100% {
+      bottom: -42px;
+  }
+}
+
+@keyframes rotatemagic {
+  0% {
+      opacity: 0;
+      transform: rotate(0deg);
+      top: -24px;
+      left: -253px;
+  }
+  100% {
+      transform: rotate(-30deg);
+      top: -24px;
+      left: -78px;
+  }
+}

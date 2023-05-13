@@ -12,6 +12,9 @@ import argparse
 # from scipy.misc import imread, imresize
 import imageio
 from PIL import Image
+from io import BytesIO
+from PIL import Image
+import base64
 
 def caption_image_beam_search(encoder, decoder, image_path, word_map):
     
@@ -148,8 +151,19 @@ def visualize_att(image_path, seq, alphas, rev_word_map, path, smooth=True):
     # plt.show()
     return caption
 
-def predict(img):
-    img = "img\\" + img + ".png"
+def predict(img_url):
+    # Remove the header information from the image data
+    image_data = img_url.replace("data:image/png;base64,", "")
+
+    # Decode the base64-encoded image data
+    image_bytes = base64.b64decode(image_data)
+
+    # Open the image using Pillow
+    image = Image.open(BytesIO(image_bytes))
+
+    # Save the image to the specified path
+    image.save("D:/SPKT/Năm 4/HK 2/Khóa luận tốt nghiệp/Project/BE/Image Captioning BE - FastAPI/img/test.png")
+    img = "img\\test.png"
     checkpoint = "models\BEST_checkpoint_coco_5_cap_per_img_5_min_word_freq.pth.tar"
     word_map = "models\WORDMAP_coco_5_cap_per_img_5_min_word_freq.json"
     save_img_dir = "caption"
