@@ -1,3 +1,48 @@
+<div id="#top"></div>
+<header class="header">
+  <div class="container">
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button
+          type="button"
+          id="nav-toggle"
+          class="navbar-toggle"
+          data-toggle="collapse"
+          data-target="#main-nav"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand scroll-top logo animated bounceInLeft">
+          <b>
+            Image Captioning
+            <i></i>
+          </b>
+        </a>
+      </div>
+      <!--/.navbar-header-->
+      <div id="main-nav" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav" id="mainNav">
+          <li class="active" id="firstLink">
+            <a href="#home" class="scroll-link">Home</a>
+          </li>
+          <li><a href="#features" class="scroll-link">Features</a></li>
+          <li><a href="#tryIt" class="scroll-link">Try It</a></li>
+          <li><a href="#services" class="scroll-link">Services</a></li>
+          <li><a href="#team" class="scroll-link">Team</a></li>
+          <li><a href="#contactUs" class="scroll-link">Contact Us</a></li>
+        </ul>
+      </div>
+      <!--/.navbar-collapse-->
+    </nav>
+    <!--/.navbar-->
+  </div>
+  <!--/.container-->
+</header>
+<!--/.header-->
+
 <ion-content>
   <section id="home">
     <div class="banner-container">
@@ -5,12 +50,12 @@
       <div class="container banner-content">
         <div class="hero-text animated fadeInDownBig">
           <a href="#" class="scroll-top logo animated bounceInLeft">
-            <b>Vibrant</b>
+            <b>Image Captioning</b>
           </a>
           <h1 class="responsive-headline" style="font-size: 40px;">
-            Presenting you beautiful
+            Uploading your image
             <br />
-            Bootstrap Responsive website
+            We will caption for it
           </h1>
           <a href="#basics" class="arrow-link">
             <i class="fa fa-chevron-down fa-2x"></i>
@@ -25,15 +70,13 @@
     </div>
   </section>
 
-
   <section id="features" class="page-section colord features">
     <div class="container">
       <div class="heading text-center">
         <!-- Heading -->
         <h2>Features</h2>
         <p>
-          At lorem Ipsum available, but the majority have suffered alteration
-          in some form by injected humour.
+          The website will caption for your image you uploaded automatically.
         </p>
       </div>
       <div class="row">
@@ -48,10 +91,9 @@
 
             <!-- FEATURE HEADING AND DESCRIPTION -->
             <div class="fetaure-details">
-              <h4 class="main-color">Responsive Design</h4>
+              <h4 class="main-color">Image Captioning</h4>
               <p>
-                Lorem ipsum dolor sit amet, ea eum labitur scsstie percioleat
-                fabulas labore et dolor.
+                Caption image automatically.
               </p>
             </div>
           </div>
@@ -65,13 +107,13 @@
             </div>
 
             <!-- FEATURE HEADING AND DESCRIPTION -->
-            <div class="fetaure-details">
+            <!-- <div class="fetaure-details">
               <h4 class="main-color">Bootstrap 3.2.2</h4>
               <p>
                 Lorem ipsum dolor sit amet, ea eum labitur scsstie percioleat
                 fabulas labore et dolor.
               </p>
-            </div>
+            </div> -->
           </div>
           <!-- /END SINGLE FEATURE -->
 
@@ -83,13 +125,13 @@
             </div>
 
             <!-- FEATURE HEADING AND DESCRIPTION -->
-            <div class="fetaure-details">
+            <!-- <div class="fetaure-details">
               <h4 class="main-color">Cross-Browser Support</h4>
               <p>
                 Lorem ipsum dolor sit amet, ea eum labitur scsstie percioleat
                 fabulas labore et dolor.
               </p>
-            </div>
+            </div> -->
           </div>
           <!-- /END SINGLE FEATURE -->
         </div>
@@ -113,10 +155,10 @@
 
             <!-- FEATURE HEADING AND DESCRIPTION -->
             <div class="fetaure-details">
-              <h4 class="main-color">Awesome Fonts</h4>
+              <h4 class="main-color">Module Search</h4>
               <p>
-                Lorem ipsum dolor sit amet, ea eum labitur scsstie percioleat
-                fabulas labore et dolor.
+                Search all image in database that its caption is almost the same
+                your caption you want
               </p>
             </div>
           </div>
@@ -130,13 +172,13 @@
             </div>
 
             <!-- FEATURE HEADING AND DESCRIPTION -->
-            <div class="fetaure-details">
+            <!-- <div class="fetaure-details">
               <h4 class="main-color">Creative Design</h4>
               <p>
                 Lorem ipsum dolor sit amet, ea eum labitur scsstie percioleat
                 fabulas labore et dolor.
               </p>
-            </div>
+            </div> -->
           </div>
 
           <!-- /END SINGLE FEATURE -->
@@ -149,13 +191,13 @@
             </div>
 
             <!-- FEATURE HEADING AND DESCRIPTION -->
-            <div class="fetaure-details">
+            <!-- <div class="fetaure-details">
               <h4 class="main-color">More Features</h4>
               <p>
                 Lorem ipsum dolor sit amet, ea eum labitur scsstie percioleat
                 fabulas labore et dolor.
               </p>
-            </div>
+            </div> -->
           </div>
           <!-- /END SINGLE FEATURE -->
         </div>
@@ -163,121 +205,120 @@
       </div>
     </div>
 
-    <div class="heading text-center">
-      <h2>Try it</h2>
-    </div>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
-          <ion-button (click)="captureImageFromGallery()" expand="full" color="primary">
-            <ion-icon name="image" class="mr-5"></ion-icon>
-            Gallery
-          </ion-button>
-        </ion-col>
-        <ion-col size="6" size-sm="4" size-md="3">
-          <ion-button (click)="captureImageFromCamera()" expand="full" color="primary">
-            <ion-icon name="camera" class="mr-5"></ion-icon>
-            Camera
-          </ion-button>
-        </ion-col>
-        <ion-col size="12">
-          <input 
-            type="file"
-            accept="image/jpeg"
-            #filePicker
-            (change)="onFileChosen($event)"
-          />
-        </ion-col>
-      </ion-row>
-      <ion-row  *ngIf="imgUrl">
-        <ion-col  size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
-          <ion-button expand="full" (click)="generateCaption()" color="secondary">
-            <ion-icon name="finger-print" class="mr-5"></ion-icon>
-            Generate Caption
-          </ion-button>
-        </ion-col>
-        <ion-col size="6" size-sm="4" size-md="3">
-          <ion-button expand="full" (click)="generateCaption()" color="danger">
-            <ion-icon name="albums" class="mr-5"></ion-icon>
-            Generate OTP
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="imgUrl">
-        <ion-col size="12" size-sm="8" size-md="6" offset-sm="2" offset-md="3">
-          <div class="img">
-            <ion-img [src]="imgUrl" style="width: 100%; border: 1px solid #36bfba; height: 300px; max-height: 300px; object-fit: cover;"></ion-img>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row style="position: absolute;top: 60%; left: 50%; transform: translate(-50%, -50%);" *ngIf="!imgUrl">
-        <ion-col>
-          <div class="none">
-            No Image Selected!
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  
-    <div class="caption" *ngIf="captionGenerated">
-      <div class="close" (click)="hideCaption()">
-        <ion-icon name="close"></ion-icon>
-      </div>
-      <div class="content" *ngIf="resultGenerated">
-        <p>The caption of your image is: {{caption}}</p>
-      </div>
-    </div>
-
     <!--/.container-->
   </section>
-  <section id="aboutUs">
+  <section id="tryIt">
     <div class="container">
-      <div class="heading text-center">
-        <!-- Heading -->
-        <h2>About Us</h2>
-        <p>
-          At lorem Ipsum available, but the majority have suffered alteration
-          in some form by injected humour.
-        </p>
-      </div>
-      <div class="row feature design">
-        <div class="six columns right">
-          <p>
-            <strong>
-              Lorem ipsum dolor sit amet, ea eum labitur scsstie percipitoleat
-              fabulas complectitur deterruisset at pro. Odio quaeque
-              reformidans est eu, expetendis intellegebat has ut, viderer
-              invenire ut his. Has molestie percipit an. Falli volumus
-              efficiantur sed id, ad vel noster propriae. Ius ut etiam
-              vivendo, graeci iudicabit constituto at mea. No soleat fabulas
-              prodesset vel, ut quo solum dicunt. Nec et jority have suffered
-              alteration.
-            </strong>
-          </p>
-          <p>
-            Odio quaeque reformidans est eu, expetendis intellegebat has ut,
-            viderer invenire ut his. Has molestie percipit an. Falli volumus
-            efficiantur sed id, ad vel noster propriae. Ius ut etiam vivendo,
-            graeci iudicabit constituto at mea. No soleat fabulas prodesset
-            vel, ut quo solum dicunt. Nec et amet vidisse mentitumsstie
-            percipitoleat fabulas.
-          </p>
+      <div class="row">
+        <div class="heading text-center">
+          <h2>Try it</h2>
         </div>
-        <div class="six columns feature-media left">
-          <img src="assets/images/feature-img-1.png" alt="" />
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
+            <ion-button
+              (click)="captureImageFromCamera()"
+              expand="full"
+              color="primary"
+            >
+              <ion-icon name="camera" class="mr-5"></ion-icon>
+              Upload image
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" size-sm="4" size-md="3">
+            <ion-button
+              (click)="captureImageFromGallery()"
+              expand="full"
+              color="primary"
+            >
+              <ion-icon name="image" class="mr-5"></ion-icon>
+              Search
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <input
+              type="file"
+              accept="image/jpeg"
+              #filePicker
+              (change)="onFileChosen($event)"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="imgUrl">
+          <ion-col
+            size="12"
+            size-sm="8"
+            size-md="6"
+            offset-sm="2"
+            offset-md="3"
+          >
+            <div class="img">
+              <ion-img
+                [src]="imgUrl"
+                style="
+                  width: 100%;
+                  border: 1px solid #36bfba;
+                  height: 400px;
+                  max-height: 400px;
+                  object-fit: cover;
+                "
+              ></ion-img>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="imgUrl">
+          <ion-col size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
+            <ion-button
+              expand="full"
+              (click)="generateCaption()"
+              color="secondary"
+            >
+              <ion-icon name="finger-print" class="mr-5"></ion-icon>
+              Generate Caption
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" size-sm="4" size-md="3">
+            <ion-button
+              expand="full"
+              (click)="generateCaption()"
+              color="danger"
+            >
+              <ion-icon name="albums" class="mr-5"></ion-icon>
+              Read Caption
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <div class="heading text-center">
+          <ion-row *ngIf="!imgUrl">
+            <ion-col>
+              <div class="none">
+                No Image Selected!
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-grid>
+
+      <div class="caption" *ngIf="captionGenerated">
+        <div class="close" (click)="hideCaption()">
+          <ion-icon name="close"></ion-icon>
+        </div>
+        <div class="content" *ngIf="resultGenerated">
+          <p>The caption of your image is: {{caption}}</p>
         </div>
       </div>
     </div>
   </section>
+
   <section id="services">
     <div class="container services">
       <div class="heading text-center">
         <!-- Heading -->
-        <h2>Services</h2>
+        <h2>Framework</h2>
         <p>
-          At lorem Ipsum available, but the majority have suffered alteration
-          in some form by injected humour.
+          At lorem Ipsum available, but the majority have suffered alteration in
+          some form by injected humour.
         </p>
       </div>
       <div class="serviceBox">
@@ -285,36 +326,38 @@
           <div class="col-md-4 col-sm-4">
             <h3>
               <i class="fa fa-desktop color"></i>
-              &nbsp; User Experiance
+              &nbsp; Transformer
             </h3>
             <!-- Paragraph -->
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              The Transformer architecture revolutionized natural language
+              processing with its self-attention mechanism, enabling effective
+              capture of word dependencies and improving performance in NLP
+              tasks..
             </p>
           </div>
           <div class="col-md-4 col-sm-4">
             <!-- Heading -->
             <h3>
               <i class="fa fa-cloud color"></i>
-              &nbsp;Story Board
+              &nbsp;FastAPI
             </h3>
             <!-- Paragraph -->
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              FastAPI is a high-performance web framework for building APIs with
+              Python.
             </p>
           </div>
           <div class="col-md-4 col-sm-4">
             <!-- Heading -->
             <h3>
               <i class="fa fa-home color"></i>
-              &nbsp;Wireframes
+              &nbsp;Angular
             </h3>
             <!-- Paragraph -->
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              Angular is a popular frontend framework for building dynamic web
+              applications.
             </p>
           </div>
         </div>
@@ -322,56 +365,59 @@
           <div class="col-md-4 col-sm-4">
             <h3>
               <i class="fa fa-desktop color"></i>
-              &nbsp;Information
+              &nbsp;MS COCO
             </h3>
             <!-- Paragraph -->
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              The MS COCO dataset is a widely-used dataset in computer vision
+              for object detection and image captioning tasks.
             </p>
           </div>
           <div class="col-md-4 col-sm-4">
             <!-- Heading -->
             <h3>
               <i class="fa fa-cloud color"></i>
-              &nbsp;Graphic Design
+              &nbsp;Python
             </h3>
             <!-- Paragraph -->
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              Python is a popular and versatile programming language known for
+              its simplicity and readability, often used for backend
+              development, data analysis, and machine learning..
             </p>
           </div>
           <div class="col-md-4 col-sm-4">
             <!-- Heading -->
             <h3>
               <i class="fa fa-home color"></i>
-              &nbsp;User Interface
+              &nbsp;Typescript
             </h3>
             <!-- Paragraph -->
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              TypeScript is a strongly typed superset of JavaScript that adds
+              static typing and other features to enhance JavaScript development
+              for large-scale applications, providing improved tooling and
+              maintainability.
             </p>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
+
   <section id="team" class="page-section">
     <div class="container">
       <div class="heading text-center">
         <!-- Heading -->
         <h2>Team</h2>
         <p>
-          At variations of passages of Lorem Ipsum available, but the majority
-          have suffered alteration..
+          The information my team
         </p>
       </div>
       <!-- Team Member's Details -->
       <div class="team-content">
         <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-6"></div>
           <div class="col-md-3 col-sm-6 col-xs-6">
             <!-- Team Member -->
             <div class="team-member pDark">
@@ -385,15 +431,22 @@
                 />
               </div>
               <!-- Member Details -->
-              <h4>John Doe</h4>
+              <h4>Nguyễn Lê Bảo Thanh</h4>
               <!-- Designation -->
-              <span class="pos">CEO</span>
+              <span class="pos">19110019</span>
               <div class="team-socials">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-dribbble"></i></a>
-                <a href="#"><i class="fa fa-github"></i></a>
+                <a
+                  href="https://www.facebook.com/lebaothanh.nguyen.73"
+                  target="blank"
+                >
+                  <i class="fa fa-facebook"></i>
+                </a>
+                <a href="mailto:19110019@student.hcmute.edu.vn" target="blank">
+                  <i class="fa fa-envelope"></i>
+                </a>
+                <a href="https://github.com/Bao-Thanh" target="blank">
+                  <i class="fa fa-github"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -410,68 +463,26 @@
                 />
               </div>
               <!-- Member Details -->
-              <h4>Larry Doe</h4>
+              <h4>Huỳnh Nguyễn Tấn Nhạc</h4>
               <!-- Designation -->
-              <span class="pos">Art Director</span>
+              <span class="pos">19110252</span>
               <div class="team-socials">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-dribbble"></i></a>
-                <a href="#"><i class="fa fa-github"></i></a>
+                <a
+                  href="https://www.facebook.com/profile.php?id=100009754263122"
+                  target="blank"
+                >
+                  <i class="fa fa-facebook"></i>
+                </a>
+                <a href="mailto:19110@student.hcmute.edu.vn" target="blank">
+                  <i class="fa fa-envelope"></i>
+                </a>
+                <a href="https://github.com/tannhac2310" target="blank">
+                  <i class="fa fa-github"></i>
+                </a>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-6">
-            <!-- Team Member -->
-            <div class="team-member pDark">
-              <!-- Image Hover Block -->
-              <div class="member-img">
-                <!-- Image  -->
-                <img
-                  class="img-responsive"
-                  src="assets/images/photo-3.jpg"
-                  alt=""
-                />
-              </div>
-              <!-- Member Details -->
-              <h4>Ranith Kays</h4>
-              <!-- Designation -->
-              <span class="pos">Manager</span>
-              <div class="team-socials">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-dribbble"></i></a>
-                <a href="#"><i class="fa fa-github"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6">
-            <!-- Team Member -->
-            <div class="team-member pDark">
-              <!-- Image Hover Block -->
-              <div class="member-img">
-                <!-- Image  -->
-                <img
-                  class="img-responsive"
-                  src="assets/images/photo-4.jpg"
-                  alt=""
-                />
-              </div>
-              <!-- Member Details -->
-              <h4>Joan Ray</h4>
-              <!-- Designation -->
-              <span class="pos">Creative</span>
-              <div class="team-socials">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-dribbble"></i></a>
-                <a href="#"><i class="fa fa-github"></i></a>
-              </div>
-            </div>
-          </div>
+          <div class="col-md-3 col-sm-6 col-xs-6"></div>
         </div>
       </div>
     </div>
@@ -545,7 +556,9 @@
         <a href="#"><i class="fa fa-facebook"></i></a>
         <a href="#"><i class="fa fa-dribbble"></i></a>
         <a href="#"><i class="fa fa-flickr"></i></a>
-        <a href="#"><i class="fa fa-github"></i></a>
+        <a href="https://github.com/Bao-Thanh/Image_Captioning" target="blank">
+          <i class="fa fa-github"></i>
+        </a>
       </div>
       <div class="clear"></div>
       <!--CLEAR FLOATS-->
@@ -556,13 +569,21 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12 text-center">
-          Copyright 2014 | All Rights Reserved -- Template by
-          <a href="http://webThemez.com">WebThemez.com</a>
+          &copy; 2023
+          <span id="currentYear"></span>
+          | All Rights Reserved --
+          <!-- <a href="http://webThemez.com">WebThemez.com</a> -->
         </div>
       </div>
       <!-- / .row -->
     </div>
   </section>
+
+  <script>
+    var currentYear = new Date().getFullYear()
+    document.getElementById('currentYear').textContent = currentYear
+  </script>
+
   <!-- <section class="" style="position: absolute; top: 0; left: 0; right: 0;">
     <div class="background">
       <div class="img1" style="background-color: #063c52; display: flex; justify-content: center; border-bottom: 1px solid #073f54;">
@@ -574,3 +595,22 @@
     </div>
   </section> -->
 </ion-content>
+
+<a href="#top" class="topHome"><i class="fa fa-chevron-up fa-2x"></i></a>
+
+<!--[if lte IE 8]>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<![endif]-->
+<script src="assets/js/modernizr-latest.js"></script>
+<script src="assets/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery.isotope.min.js" type="text/javascript"></script>
+<script
+  src="assets/js/fancybox/jquery.fancybox.pack.js"
+  type="text/javascript"
+></script>
+<script src="assets/js/jquery.nav.js" type="text/javascript"></script>
+<script src="assets/js/jquery.fittext.js"></script>
+<script src="assets/js/waypoints.js"></script>
+<script src="assets/js/custom.js" type="text/javascript"></script>
+<script src="assets/js/owl-carousel/owl.carousel.js"></script>
