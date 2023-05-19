@@ -222,17 +222,13 @@
               expand="full"
               color="primary"
             >
-              <ion-icon name="camera" class="mr-5"></ion-icon>
+              <ion-icon name="image" class="mr-5"></ion-icon>
               Upload image
             </ion-button>
           </ion-col>
           <ion-col size="6" size-sm="4" size-md="3">
-            <ion-button
-              (click)="captureImageFromGallery()"
-              expand="full"
-              color="primary"
-            >
-              <ion-icon name="image" class="mr-5"></ion-icon>
+            <ion-button (click)="searchCaption()" expand="full" color="primary">
+              <ion-icon name="search-outline" class="mr-5"></ion-icon>
               Search
             </ion-button>
           </ion-col>
@@ -245,7 +241,7 @@
             />
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="imgUrl">
+        <ion-row *ngIf="imgUrl && !searchGenerated">
           <ion-col
             size="12"
             size-sm="8"
@@ -259,38 +255,27 @@
                 style="
                   width: 100%;
                   border: 1px solid #36bfba;
-                  height: 400px;
                   max-height: 400px;
-                  object-fit: cover;
+                  object-fit: contain;
                 "
               ></ion-img>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="imgUrl">
-          <ion-col size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
+        <ion-row *ngIf="imgUrl && !searchGenerated">
+          <ion-col size="6" size-sm="4" size-md="6" offset-sm="2" offset-md="3">
             <ion-button
               expand="full"
-              (click)="generateCaption()"
+              (click)="generateCaption_view()"
               color="secondary"
             >
               <ion-icon name="finger-print" class="mr-5"></ion-icon>
               Generate Caption
             </ion-button>
           </ion-col>
-          <ion-col size="6" size-sm="4" size-md="3">
-            <ion-button
-              expand="full"
-              (click)="generateCaption()"
-              color="danger"
-            >
-              <ion-icon name="albums" class="mr-5"></ion-icon>
-              Read Caption
-            </ion-button>
-          </ion-col>
         </ion-row>
         <div class="heading text-center">
-          <ion-row *ngIf="!imgUrl">
+          <ion-row *ngIf="!imgUrl && !searchGenerated">
             <ion-col>
               <div class="none">
                 No Image Selected!
@@ -300,14 +285,49 @@
         </div>
       </ion-grid>
 
+      <ion-header *ngIf="searchGenerated">
+        <ion-toolbar>
+          <ion-searchbar
+            [(ngModel)]="searchText"
+            (ionChange)="onSearchChange($event)"
+            placeholder="Search Caption to get images in database"
+          ></ion-searchbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="performSearch()" class="custom-search-button">
+              <ion-icon name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
       <div class="caption" *ngIf="captionGenerated">
         <div class="close" (click)="hideCaption()">
           <ion-icon name="close"></ion-icon>
         </div>
         <div class="content" *ngIf="resultGenerated">
-          <p>The caption of your image is: {{caption}}</p>
+          <div class="image-container">
+            <ion-img [src]="imgUrl" class="small-image"></ion-img>
+          </div>
+          <div class="heading text-center">
+            <h3>The caption of your image is: {{caption}}</h3>
+          </div>
+          <ion-row *ngIf="imgUrl">
+            <ion-col size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
+              <ion-button expand="full" (click)="generateCaption_read()" color="danger">
+                <ion-icon name="mic-outline" class="mr-5"></ion-icon>
+                Read Caption
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" size-sm="4" size-md="3">
+              <ion-button expand="full" (click)="copyCaption()" color="primary">
+                <ion-icon name="copy" class="mr-5"></ion-icon>
+                Copy Caption
+              </ion-button>
+            </ion-col>
+          </ion-row>
         </div>
       </div>
+      
     </div>
   </section>
 

@@ -79,6 +79,46 @@ input[type="file"] {
   }
 }
 
+.custom-searchbar {
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.custom-search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #36bfba;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.custom-search-button ion-icon {
+  font-size: 14px;
+}
+
+
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.small-image {
+  width: 200px; /* Adjust the width as needed */
+  height: auto;
+  border: 1px solid #36bfba;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+
+
 
 
 
