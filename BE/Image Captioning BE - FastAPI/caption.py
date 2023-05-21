@@ -153,7 +153,17 @@ def visualize_att(image_path, seq, alphas, rev_word_map, path, smooth=True):
 
 def predict(img_url):
     # Remove the header information from the image data
-    image_data = img_url.replace("data:image/png;base64,", "")
+    header, image_data = img_url.split(",", 1)
+
+    # Determine the image format based on the header information
+    if header == "data:image/jpeg;base64":
+        image_format = "JPEG"
+        file_extension = "jpg"
+    elif header == "data:image/png;base64":
+        image_format = "PNG"
+        file_extension = "png"
+    else:
+        raise ValueError("Unsupported image format.")
 
     # Decode the base64-encoded image data
     image_bytes = base64.b64decode(image_data)
@@ -162,10 +172,12 @@ def predict(img_url):
     image = Image.open(BytesIO(image_bytes))
 
     # Save the image to the specified path
-    image.save("D:/SPKT/Năm 4/HK 2/Khóa luận tốt nghiệp/Project/BE/Image Captioning BE - FastAPI/img/test.png")
-    img = "img\\test.png"
-    checkpoint = "models\BEST_checkpoint_coco_5_cap_per_img_5_min_word_freq.pth.tar"
-    word_map = "models\WORDMAP_coco_5_cap_per_img_5_min_word_freq.json"
+    file_path = os.path.join("img", "test." + file_extension)
+    image.save(file_path)
+
+    img = file_path
+    checkpoint = "models/BEST_checkpoint_coco_5_cap_per_img_5_min_word_freq.pth.tar"
+    word_map = "models/WORDMAP_coco_5_cap_per_img_5_min_word_freq.json"
     save_img_dir = "caption"
     smooth = True
 
@@ -183,8 +195,6 @@ def predict(img_url):
     encoder = checkpoint['encoder']
     encoder = encoder.to(device)
     encoder.eval()
-    # print(encoder)
-    # print(decoder)
 
     # Load word map (word2ix)
     with open(word_map, 'r') as j:
@@ -196,10 +206,8 @@ def predict(img_url):
         seq, alphas = caption_image_beam_search(encoder, decoder, img, word_map)
         alphas = torch.FloatTensor(alphas)
 
-    # if not (os.path.exists(args.save_img_dir) and os.path.isdir(args.save_img_dir)):
-    #     os.makedirs(args.save_img_dir)
     timestamp = str(int(time.time()))
-    path = save_img_dir + "/" + timestamp + ".png"
+    path = os.path.join(save_img_dir, timestamp + ".png")
     # Visualize caption and attention of best sequence
     caption = visualize_att(img, seq, alphas, rev_word_map, path, smooth)
     return caption

@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from caption import predict
+from search import search
 
 app = FastAPI()
 
@@ -21,6 +22,9 @@ app.add_middleware(
 class ImageInput(BaseModel):
     img_path: str
 
+class SearchInput(BaseModel):
+    search: str
+    
 @app.post("/predict")                        
 def predict_caption(image_input: ImageInput):
     img_path = image_input.img_path
@@ -38,7 +42,18 @@ def predict_caption(image_input: ImageInput):
         
     else:
         raise HTTPException(status_code=404, detail="Not found image")   
+    
+    
+@app.post("/search")                        
+def perform_search(search_input: SearchInput):
+    input_caption = search_input.search
+    result = search(input_caption)
+    if result:
+        return result
+    else:
+        raise HTTPException(status_code=404, detail="Error")   
 
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=5000)
+

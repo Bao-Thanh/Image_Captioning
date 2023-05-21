@@ -33,12 +33,12 @@ export class CaptionService {
     );
   }
       
-  public generateOTP(credentials: string): Observable<any> {
+  public search(credentials: string): Observable<any> {
     console.log(credentials);
     
-    const url = `${this.localUrl}/predict2`;
+    const url = `${this.localUrl}/search`;
 
-    return this.http.post(url, { img_path: credentials})
+    return this.http.post(url, { search: credentials})
     .pipe(
       map((response: Response) => response),
       catchError(this.handleError)

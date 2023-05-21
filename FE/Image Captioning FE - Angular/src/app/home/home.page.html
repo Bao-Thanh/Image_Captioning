@@ -255,7 +255,7 @@
                 style="
                   width: 100%;
                   border: 1px solid #36bfba;
-                  max-height: 400px;
+                  height: 300px;
                   object-fit: contain;
                 "
               ></ion-img>
@@ -275,7 +275,7 @@
           </ion-col>
         </ion-row>
         <div class="heading text-center">
-          <ion-row *ngIf="!imgUrl && !searchGenerated">
+          <ion-row *ngIf="!imgUrl && !searchGenerated && !search">
             <ion-col>
               <div class="none">
                 No Image Selected!
@@ -290,6 +290,7 @@
           <ion-searchbar
             [(ngModel)]="searchText"
             (ionChange)="onSearchChange($event)"
+            (keyup.enter)="performSearch()"
             placeholder="Search Caption to get images in database"
           ></ion-searchbar>
           <ion-buttons slot="end">
@@ -299,8 +300,15 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
+      
 
-      <div class="caption" *ngIf="captionGenerated">
+      <!-- Add this table code after the existing code in the <section id="tryIt"> -->
+      <!-- home.page.html -->
+      <div
+        class="caption"
+        *ngIf="captionGenerated"
+        style="background-color: white;"
+      >
         <div class="close" (click)="hideCaption()">
           <ion-icon name="close"></ion-icon>
         </div>
@@ -312,8 +320,18 @@
             <h3>The caption of your image is: {{caption}}</h3>
           </div>
           <ion-row *ngIf="imgUrl">
-            <ion-col size="6" size-sm="4" size-md="3" offset-sm="2" offset-md="3">
-              <ion-button expand="full" (click)="generateCaption_read()" color="danger">
+            <ion-col
+              size="6"
+              size-sm="4"
+              size-md="3"
+              offset-sm="2"
+              offset-md="3"
+            >
+              <ion-button
+                expand="full"
+                (click)="generateCaption_read()"
+                color="danger"
+              >
                 <ion-icon name="mic-outline" class="mr-5"></ion-icon>
                 Read Caption
               </ion-button>
@@ -327,7 +345,36 @@
           </ion-row>
         </div>
       </div>
-      
+      <div class="caption" *ngIf="search" style="background-color: white;">
+        <div class="close" (click)="hideCaption()">
+          <ion-icon name="close"></ion-icon>
+        </div>
+        <div class="content" *ngIf="search">
+          <div *ngIf="searchResults.length > 0; else noResults">
+            <table>
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Caption</th>
+                  <th>Score</th>
+                  <th>Image</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let result of searchResults; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ result.caption }}</td>
+                  <td>{{ result.score }}</td>
+                  <td><img [src]="result.url" alt="Image" class="imgtable"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noResults>
+            <p>No search results found.</p>
+          </ng-template>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -6,6 +6,11 @@ input[type="file"] {
   display: none;
 }
 
+ion-header {
+  position: relative;
+  z-index: 1;
+}
+
 .caption {
   position: fixed;
   bottom: 0;
@@ -18,6 +23,7 @@ input[type="file"] {
   border-top-right-radius: 50px;
   animation: animatop 1.2s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
   overflow: scroll;
+  z-index: 1;
 
   .close {
     position: absolute;
@@ -115,6 +121,46 @@ input[type="file"] {
   border: 1px solid #36bfba;
   max-height: 400px;
   object-fit: contain;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #ddd;
+}
+
+td:first-child, td:nth-child(2) {
+  text-align: center;
+}
+
+td:nth-child(3) {
+  padding-left: 20px;
+}
+
+td:last-child {
+  text-align: center;
+}
+
+.imgtable {
+  max-width: 100px;
+  max-height: 100px;
 }
 
 
