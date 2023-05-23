@@ -15,14 +15,14 @@ def search(input_caption):
         number = document["number"]
         caption_text = document["caption"]
         url = document["url"]
-        
+
         caption_data = {
             "_id": _id,
             "number": number,
             "caption": caption_text,
             "url": url
         }
-        
+
         caption.append(caption_data)
 
     def replace_characters_with_space(caption):
@@ -38,7 +38,6 @@ def search(input_caption):
         result = ' '.join(unique_words)
         return result
 
-
     def get_words(caption):
         words = caption.split()
         return words
@@ -49,9 +48,7 @@ def search(input_caption):
         caption_len = len(caption_list)
         common_elements = set(input_list).intersection(caption_list)
         count = len(common_elements)
-        return round(((count/caption_len)*100), 2)   
-
-
+        return round(((count/caption_len)*100), 2)
 
     for cap in caption:
         cap["score"] = compare_caption(input_caption, cap["caption"])
@@ -65,6 +62,13 @@ def search(input_caption):
             "score": f"{cap['score']}%",
             "url": cap["url"]
         }
-        for cap in sorted_caption_list
+        for cap in sorted_caption_list if cap['score'] > 0
     ]
+
+    # After the line sorted_compare_caption_list_with_percent = ...
+
+    if len(sorted_compare_caption_list_with_percent) > 100:
+        sorted_compare_caption_list_with_percent = sorted_compare_caption_list_with_percent[:100]
+
     return sorted_compare_caption_list_with_percent
+

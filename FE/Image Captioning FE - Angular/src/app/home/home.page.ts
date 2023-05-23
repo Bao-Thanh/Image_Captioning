@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core'
 import { Camera } from '@ionic-native/camera/ngx'
 import { Platform } from '@ionic/angular'
 import { ToastController } from '@ionic/angular'
+import { HttpClient } from '@angular/common/http'
 
 import {
   Plugins,
@@ -30,7 +31,7 @@ function dataURLtoFile(dataurl, filename) {
 })
 export class HomePage {
   @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>
-  @ViewChild('captionCell') captionCellRef: ElementRef;
+  @ViewChild('captionCell') captionCellRef: ElementRef
 
   imgUrl: string
   caption: string
@@ -40,12 +41,14 @@ export class HomePage {
   search: any
   searchText: any
   searchResults: any[] = [] // Declare captions as an empty array
+  showMessage: boolean = false
 
   constructor(
     private camera: Camera,
     private platform: Platform,
     private toastController: ToastController,
     private captionService: CaptionService,
+    private http: HttpClient,
   ) {}
 
   ngOnInit() {}
@@ -98,10 +101,10 @@ export class HomePage {
 
   highlightText(text: string): string {
     if (this.searchText && text) {
-      const regex = new RegExp(this.searchText, 'gi');
-      return text.replace(regex, '<span class="highlight">$&</span>');
+      const regex = new RegExp(this.searchText, 'gi')
+      return text.replace(regex, '<span class="highlight">$&</span>')
     }
-    return text;
+    return text
   }
 
   searchCaption() {
@@ -111,17 +114,29 @@ export class HomePage {
   async performSearch() {
     if (this.searchText) {
       this.captionService.search(this.searchText).subscribe(
-        (response: any) => {
-          this.search = true;
-          this.searchResults = response; // Assuming response is an array of search results
+        async (response: any) => {
+          this.search = true
+          this.searchResults = response // Assuming response is an array of search results
+          const toast = await this.toastController.create({
+            message:
+              '<h3>' +
+              (this.searchResults.length > 0
+                ? 'Find ' +
+                  this.searchResults.length +
+                  (this.searchResults.length > 1 ? ' results' : ' result')
+                : 'No search results found') +
+              '</h3>',
+            duration: 3000, // Adjust the duration as needed
+            position: 'middle', // Set the toast position
+          })
+          toast.present()
         },
         (error: any) => {
-          console.error('An error occurred while performing the search:', error);
-        }
-      );
+          console.error('An error occurred while performing the search:', error)
+        },
+      )
     }
   }
-  
 
   onFileChosen(event: Event) {
     const pickedFile = (event.target as HTMLInputElement).files[0]
@@ -228,9 +243,49 @@ export class HomePage {
     console.log('Search term:', searchTerm)
   }
 
-  hideCaption() {
+  hideCaption_generate() {
     this.captionGenerated = false
-    this.searchGenerated = false
     this.search = false
+  }
+
+  hideCaption_search() {
+    this.searchGenerated = true
+    this.search = false
+  }
+
+  async sendEmail() {
+    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const title = (document.getElementById('title') as HTMLInputElement).value;
+    const comment = (document.getElementById('comments') as HTMLTextAreaElement).value;
+    const emailAddress = '19110019@student.hcmute.edu.vn'; // Your email address
+  
+    // Create the email body
+    const emailBody = `Tôi là ${name}, tôi có góp ý ${comment}`;
+  
+    // Create the email subject
+    const emailSubject = `Feedback: ${title}`;
+  
+    // Construct the mailto URL
+    const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+  
+    // Open the mail client in a new tab or window
+    const emailWindow = window.open(mailtoUrl, '_blank');
+  
+    // Listen for the "message" event sent from the email window
+    window.addEventListener('message', (event) => {
+      if (event.data === 'emailClosed') {
+        // Show the "Thank you" message
+        this.displayThankYouMessage();
+      }
+    });
+  }
+  
+  async displayThankYouMessage() {
+    const toast = await this.toastController.create({
+      message: '<h3>Thank you for your feedback!!!</h3>',
+      duration: 2000, // Adjust the duration as needed
+      position: 'middle', // Set the toast position
+    });
+    toast.present();
   }
 }

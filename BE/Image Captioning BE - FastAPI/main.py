@@ -48,10 +48,8 @@ def predict_caption(image_input: ImageInput):
 def perform_search(search_input: SearchInput):
     input_caption = search_input.search
     result = search(input_caption)
-    if result:
-        return result
-    else:
-        raise HTTPException(status_code=404, detail="Error")   
+    return result
+  
 
 if __name__ == '__main__':
     import uvicorn

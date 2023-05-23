@@ -163,6 +163,25 @@ td:last-child {
   max-height: 100px;
 }
 
+.spinner {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 6px solid #ff6392;
+  border-top-color: #4cc9f0;
+  animation: spin 1s infinite linear;
+  margin: 20px auto;
+}
+
+.message {
+  text-align: center;
+  margin-top: 10px;
+  color: blue;
+}
+
+
+
 
 
 
