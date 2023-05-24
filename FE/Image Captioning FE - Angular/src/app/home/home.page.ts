@@ -42,6 +42,7 @@ export class HomePage {
   searchText: any
   searchResults: any[] = [] // Declare captions as an empty array
   showMessage: boolean = false
+  currentYear: number
 
   constructor(
     private camera: Camera,
@@ -49,9 +50,12 @@ export class HomePage {
     private toastController: ToastController,
     private captionService: CaptionService,
     private http: HttpClient,
-  ) {}
+  ) {
+    this.currentYear = new Date().getFullYear()
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   capTureImageOnDesktop() {
     console.log('Hello')
@@ -254,38 +258,24 @@ export class HomePage {
   }
 
   async sendEmail() {
-    const name = (document.getElementById('name') as HTMLInputElement).value;
-    const title = (document.getElementById('title') as HTMLInputElement).value;
-    const comment = (document.getElementById('comments') as HTMLTextAreaElement).value;
-    const emailAddress = '19110019@student.hcmute.edu.vn'; // Your email address
-  
+    const name = (document.getElementById('name') as HTMLInputElement).value
+    const title = (document.getElementById('title') as HTMLInputElement).value
+    const comment = (document.getElementById('comments') as HTMLTextAreaElement)
+      .value
+    const emailAddress = '19110019@student.hcmute.edu.vn' // Your email address
+
     // Create the email body
-    const emailBody = `Tôi là ${name}, tôi có góp ý ${comment}`;
-  
+    const emailBody = `Tôi là ${name}, tôi có góp ý ${comment}`
+
     // Create the email subject
-    const emailSubject = `Feedback: ${title}`;
-  
+    const emailSubject = `Feedback: ${title}`
+
     // Construct the mailto URL
-    const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-  
+    const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
+      emailSubject,
+    )}&body=${encodeURIComponent(emailBody)}`
+
     // Open the mail client in a new tab or window
-    const emailWindow = window.open(mailtoUrl, '_blank');
-  
-    // Listen for the "message" event sent from the email window
-    window.addEventListener('message', (event) => {
-      if (event.data === 'emailClosed') {
-        // Show the "Thank you" message
-        this.displayThankYouMessage();
-      }
-    });
-  }
-  
-  async displayThankYouMessage() {
-    const toast = await this.toastController.create({
-      message: '<h3>Thank you for your feedback!!!</h3>',
-      duration: 2000, // Adjust the duration as needed
-      position: 'middle', // Set the toast position
-    });
-    toast.present();
+    const emailWindow = window.open(mailtoUrl, '_blank')
   }
 }

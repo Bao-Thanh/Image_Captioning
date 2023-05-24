@@ -1,48 +1,38 @@
-<div id="#top"></div>
+<section id="#top"></section>
 <header class="header">
-  <div class="container">
-    <nav class="navbar navbar-inverse" role="navigation">
-      <div class="navbar-header">
-        <button
-          type="button"
-          id="nav-toggle"
-          class="navbar-toggle"
-          data-toggle="collapse"
-          data-target="#main-nav"
-        >
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="#" class="navbar-brand scroll-top logo animated bounceInLeft">
-          <b>
-            Image Captioning
-            <i></i>
-          </b>
-        </a>
-      </div>
-      <!--/.navbar-header-->
-      <div id="main-nav" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav" id="mainNav">
-          <li class="active" id="firstLink">
-            <a href="#home" class="scroll-link">Home</a>
+  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: rgb(6, 21, 182);">
+    <div class="container d-flex justify-content-center">
+      <a class="navbar-brand text-white" href="#">Image Captioning</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link text-white" href="home">Home</a>
           </li>
-          <li><a href="#features" class="scroll-link">Features</a></li>
-          <li><a href="#tryIt" class="scroll-link">Try It</a></li>
-          <li><a href="#services" class="scroll-link">Services</a></li>
-          <li><a href="#team" class="scroll-link">Team</a></li>
-          <li><a href="#contactUs" class="scroll-link">Contact Us</a></li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="home#features">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="home#tryIt">Try It</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="home#services">Framework</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="home#team">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="home#contactUs">Feedback</a>
+          </li>
         </ul>
       </div>
-      <!--/.navbar-collapse-->
-    </nav>
-    <!--/.navbar-->
-  </div>
-  <!--/.container-->
+    </div>
+  </nav>
 </header>
-<!--/.header-->
 
+<!--/.header-->
 <ion-content>
   <section id="home">
     <div class="banner-container">
@@ -57,9 +47,6 @@
             <br />
             We will caption for it
           </h1>
-          <a href="#basics" class="arrow-link">
-            <i class="fa fa-chevron-down fa-2x"></i>
-          </a>
           <!--<p>Awesome theme for your Business or Corporate site to showcase <br/>
         your product and service.</p>-->
         </div>
@@ -528,7 +515,7 @@
       <div class="container">
         <div class="row">
           <div class="heading text-center">
-            <!-- Heading -->
+            <h2>Feedback</h2>
           </div>
         </div>
         <div class="row mrgn30">
@@ -596,10 +583,12 @@
   <footer>
     <div class="container">
       <div class="social text-center">
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <a href="#"><i class="fa fa-dribbble"></i></a>
-        <a href="#"><i class="fa fa-flickr"></i></a>
+        <!-- <a href="#"><i class="fa fa-twitter"></i></a> -->
+        <a href="https://www.facebook.com/lebaothanh.nguyen.73" target="blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+        <!-- <a href="#"><i class="fa fa-dribbble"></i></a>
+        <a href="#"><i class="fa fa-flickr"></i></a> -->
         <a href="https://github.com/Bao-Thanh/Image_Captioning" target="blank">
           <i class="fa fa-github"></i>
         </a>
@@ -613,20 +602,13 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12 text-center">
-          &copy; 2023
+          &copy; {{ currentYear }}
           <span id="currentYear"></span>
-          | All Rights Reserved --
-          <!-- <a href="http://webThemez.com">WebThemez.com</a> -->
+          | All Rights Reserved -- Thanh & Nhạc
         </div>
       </div>
-      <!-- / .row -->
     </div>
   </section>
-
-  <script>
-    var currentYear = new Date().getFullYear()
-    document.getElementById('currentYear').textContent = currentYear
-  </script>
 
   <!-- <section class="" style="position: absolute; top: 0; left: 0; right: 0;">
     <div class="background">
@@ -640,7 +622,7 @@
   </section> -->
 </ion-content>
 
-<a href="#top" class="topHome"><i class="fa fa-chevron-up fa-2x"></i></a>
+<a href="home#top" class="scroll-link"><i class="fa fa-chevron-up fa-2x"></i></a>
 
 <!--[if lte IE 8]>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
