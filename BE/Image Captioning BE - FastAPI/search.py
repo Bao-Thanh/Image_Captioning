@@ -1,4 +1,6 @@
 import pymongo
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 
@@ -25,33 +27,24 @@ def search(input_caption):
 
         caption.append(caption_data)
 
-    def replace_characters_with_space(caption):
-        replacements = [',', '.', ';', '"', '~', '`', '-', '_', '+', '=', "'", "?", "/", "\\", "|", "<", ">"]
-        for char in replacements:
-            caption = caption.replace(char, ' ')
-        return caption
+    def calculate_similarity_score(caption1, caption2):
+        # Create a TfidfVectorizer
+        vectorizer = TfidfVectorizer()
 
-    def remove_duplicate(caption):
-        text = caption.lower()
-        words = text.split()
-        unique_words = list(set(words))
-        result = ' '.join(unique_words)
-        return result
+        # Fit the vectorizer on the two captions
+        vectorizer.fit([caption1, caption2])
 
-    def get_words(caption):
-        words = caption.split()
-        return words
+        # Transform the captions to vectors
+        caption1_vector = vectorizer.transform([caption1])
+        caption2_vector = vectorizer.transform([caption2])
 
-    def compare_caption(input_caption, caption):
-        input_list = sorted(get_words(replace_characters_with_space(remove_duplicate(input_caption))))
-        caption_list = sorted(get_words(replace_characters_with_space(remove_duplicate(caption))))
-        caption_len = len(caption_list)
-        common_elements = set(input_list).intersection(caption_list)
-        count = len(common_elements)
-        return round(((count/caption_len)*100), 2)
+        # Calculate the cosine similarity between the vectors
+        similarity_score = cosine_similarity(caption1_vector, caption2_vector)[0][0]
+
+        return round(similarity_score * 100, 2) 
 
     for cap in caption:
-        cap["score"] = compare_caption(input_caption, cap["caption"])
+        cap["score"] = calculate_similarity_score(input_caption, cap["caption"])
 
     sorted_caption_list = sorted(caption, key=lambda x: x["score"], reverse=True)
 
@@ -64,8 +57,6 @@ def search(input_caption):
         }
         for cap in sorted_caption_list if cap['score'] > 0
     ]
-
-    # After the line sorted_compare_caption_list_with_percent = ...
 
     if len(sorted_compare_caption_list_with_percent) > 100:
         sorted_compare_caption_list_with_percent = sorted_compare_caption_list_with_percent[:100]
