@@ -243,7 +243,7 @@ if __name__ == '__main__':
     parser.add_argument('--stop_criteria', type=int, default=25, help='training stop if epochs_since_improvement == stop_criteria')
     parser.add_argument('--batch_size', type=int, default=32, help='batch_size')
     parser.add_argument('--print_freq', type=int, default=100, help='print training/validation stats every __ batches.')
-    parser.add_argument('--workers', type=int, default=1, help='for data-loading; right now, only 1 works with h5pys.')
+    parser.add_argument('--workers', type=int, default=0, help='for data-loading; right now, only 1 works with h5pys.')
     parser.add_argument('--encoder_lr', type=float, default=1e-4, help='learning rate for encoder if fine-tuning.')
     parser.add_argument('--decoder_lr', type=float, default=1e-4, help='learning rate for decoder.')
     parser.add_argument('--grad_clip', type=float, default=5., help='clip gradients at an absolute value of.')

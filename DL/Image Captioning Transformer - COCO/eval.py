@@ -24,7 +24,7 @@ def evaluate_transformer(args):
     # DataLoader
     loader = torch.utils.data.DataLoader(
         CaptionDataset(args.data_folder, args.data_name, 'TEST', transform=transforms.Compose([normalize])),
-        batch_size=1, shuffle=True, num_workers=1, pin_memory=True)
+        batch_size=1, shuffle=True, num_workers=0, pin_memory=True)
 
     # Lists to store references (true captions), and hypothesis (prediction) for each image
     # If for n images, we have n hypotheses, and references a, b, c... for each image, we need -

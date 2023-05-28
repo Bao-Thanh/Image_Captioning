@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
-
 import os, time
+import sys
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -13,26 +12,17 @@ import argparse
 # from scipy.misc import imread, imresize
 import imageio
 from PIL import Image
-# import transformer, models
+from io import BytesIO
+from PIL import Image
+import base64
 
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# transformer.device = torch.device("cpu")
-# models.device = torch.device("cpu")
-print(device)
+def caption_image_beam_search(encoder, decoder, image_path, word_map):
     
-def caption_image_beam_search(args, encoder, decoder, image_path, word_map):
-    """
-    Reads an image and captions it with beam search.
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    :param encoder: encoder model
-    :param decoder: decoder model
-    :param image_path: path to image
-    :param word_map: word map
-    :param beam_size: number of sequences to consider at each decode-step
-    :return: caption, weights for visualization
-    """
-    k = args.beam_size
+    beam_size = 3
+    
+    k = beam_size
     Caption_End = False
     vocab_size = len(word_map)
     # Read image and process
@@ -79,7 +69,7 @@ def caption_image_beam_search(args, encoder, decoder, image_path, word_map):
 
     # Start decoding
     step = 1
-    
+
     # s is a number less than or equal to k, because sequences are removed from this process once they hit <end>
     while True:
         cap_len = torch.LongTensor([52]).repeat(k, 1)  # [s, 1]
@@ -132,9 +122,10 @@ def caption_image_beam_search(args, encoder, decoder, image_path, word_map):
         seqs_alpha = seqs_alpha[incomplete_inds]
         encoder_out = encoder_out[prev_word_inds[incomplete_inds]]
         top_k_scores = top_k_scores[incomplete_inds].unsqueeze(1)
+
         k_prev_words = k_prev_words[incomplete_inds]
         k_prev_words[:, :step + 1] = seqs  # [s, 52]
-            # k_prev_words[:, step] = next_word_inds[incomplete_inds]  # [s, 52]
+        # k_prev_words[:, step] = next_word_inds[incomplete_inds]  # [s, 52]
 
         # Break if things have been going on too long
         if step > 50:
@@ -150,64 +141,73 @@ def caption_image_beam_search(args, encoder, decoder, image_path, word_map):
 
 
 def visualize_att(image_path, seq, alphas, rev_word_map, path, smooth=True):
-    """
-    Visualizes caption with weights at every word.
-    Adapted from paper authors' repo: https://github.com/kelvinxu/arctic-captions/blob/master/alpha_visualization.ipynb
-
-    :param image_path: path to image that has been captioned
-    :param seq: caption
-    :param alphas: weights
-    :param rev_word_map: reverse word mapping, i.e. ix2word
-    :param smooth: smooth weights?
-    """
     image = Image.open(image_path)
     image = image.resize([14 * 24, 14 * 24], Image.LANCZOS)
 
     words = [rev_word_map[ind] for ind in seq]
     caption = " ".join(words)
-    print(caption)
-    print(path)
-    plt.title(caption)
-    plt.imshow(image)
-    plt.show()
-    
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Image_Captioning')
-    parser.add_argument('--img', '-i', default="img2\\y-nghia-cua-bien-bao-giao-thong-duong-bo.jpg", help='path to image, file or folder')
-    parser.add_argument('--checkpoint', '-m', default="BEST_checkpoint_coco_5_cap_per_img_5_min_word_freq.pth.tar", help='path to model')
-    parser.add_argument('--word_map', '-wm', default="dataset\\generated_data\\WORDMAP_coco_5_cap_per_img_5_min_word_freq.json",
-                        help='path to word map JSON')
-    parser.add_argument('--decoder_mode', default="transformer", help='which model does decoder use?')
-    parser.add_argument('--save_img_dir', '-p', default="caption", help='path to save annotated img.')
-    parser.add_argument('--beam_size', '-b', type=int, default=3, help='beam size for beam search')
-    parser.add_argument('--dont_smooth', dest='smooth', action='store_false', help='do not smooth alpha overlay')
-    args = parser.parse_args()
+    # plt.title(caption)
+    # plt.imshow(image)
+    # plt.show()
+    return caption
+
+def predict(img_url):
+    # Remove the header information from the image data
+    header, image_data = img_url.split(",", 1)
+
+    # Determine the image format based on the header information
+    if header == "data:image/jpeg;base64":
+        image_format = "JPEG"
+        file_extension = "jpg"
+    elif header == "data:image/png;base64":
+        image_format = "PNG"
+        file_extension = "png"
+    else:
+        raise ValueError("Unsupported image format.")
+
+    # Decode the base64-encoded image data
+    image_bytes = base64.b64decode(image_data)
+
+    # Open the image using Pillow
+    image = Image.open(BytesIO(image_bytes))
+
+    # Save the image to the specified path
+    file_path = os.path.join("img", "test." + file_extension)
+    image.save(file_path)
+
+    img = file_path
+    checkpoint = "models/BEST_checkpoint_coco_5_cap_per_img_5_min_word_freq.pth.tar"
+    word_map = "models/WORDMAP_coco_5_cap_per_img_5_min_word_freq.json"
+    save_img_dir = "caption"
+    smooth = True
+
+    # Check if the user wants to disable smoothing
+    if "--dont_smooth" in sys.argv:
+        smooth = False
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load model
-    checkpoint = torch.load(args.checkpoint, map_location=str(device))
+    checkpoint = torch.load(checkpoint, map_location=str(device))
     decoder = checkpoint['decoder']
     decoder = decoder.to(device)
     decoder.eval()
     encoder = checkpoint['encoder']
     encoder = encoder.to(device)
     encoder.eval()
-    # print(encoder)
-    # print(decoder)
 
     # Load word map (word2ix)
-    with open(args.word_map, 'r') as j:
+    with open(word_map, 'r') as j:
         word_map = json.load(j)
     rev_word_map = {v: k for k, v in word_map.items()}  # ix2word
 
     # Encode, decode with attention and beam search
     with torch.no_grad():
-        seq, alphas = caption_image_beam_search(args, encoder, decoder, args.img, word_map)
+        seq, alphas = caption_image_beam_search(encoder, decoder, img, word_map)
         alphas = torch.FloatTensor(alphas)
 
-    # if not (os.path.exists(args.save_img_dir) and os.path.isdir(args.save_img_dir)):
-    #     os.makedirs(args.save_img_dir)
     timestamp = str(int(time.time()))
-    path = args.save_img_dir + "/" + timestamp + ".png"
+    path = os.path.join(save_img_dir, timestamp + ".png")
     # Visualize caption and attention of best sequence
-    visualize_att(args.img, seq, alphas, rev_word_map, path, args.smooth)
-
+    caption = visualize_att(img, seq, alphas, rev_word_map, path, smooth)
+    return caption

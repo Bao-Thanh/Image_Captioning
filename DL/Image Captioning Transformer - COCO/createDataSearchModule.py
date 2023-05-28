@@ -2,7 +2,7 @@ import os
 import base64
 from pymongo import MongoClient
 
-from caption import predict
+from caption_search import predict
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['ImageCaption']
