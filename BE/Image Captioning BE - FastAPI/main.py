@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from caption import predict
+from save import save
 from search import search
 
 app = FastAPI()
@@ -37,7 +38,7 @@ def predict_caption(image_input: ImageInput):
         end_idx = caption.find(end)
 
         result = caption[start_idx:end_idx].strip()
-
+        save(result, img_path)
         return {"caption": result}
         
     else:
