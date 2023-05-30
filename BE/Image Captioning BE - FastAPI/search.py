@@ -14,13 +14,11 @@ def search(input_caption):
 
     for document in documents:
         _id = document["_id"]
-        number = document["number"]
         caption_text = document["caption"]
         url = document["url"]
 
         caption_data = {
             "_id": _id,
-            "number": number,
             "caption": caption_text,
             "url": url
         }
@@ -51,7 +49,6 @@ def search(input_caption):
     sorted_compare_caption_list_with_percent = [
         {
             "caption": cap["caption"],
-            "number": cap["number"],
             "score": f"{cap['score']}%",
             "url": cap["url"]
         }
