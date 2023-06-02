@@ -43,6 +43,7 @@ export class HomePage {
   searchResults: any[] = [] // Declare captions as an empty array
   showMessage: boolean = false
   currentYear: number
+  showSpinner = false;
 
   constructor(
     private camera: Camera,
@@ -117,10 +118,16 @@ export class HomePage {
 
   async performSearch() {
     if (this.searchText) {
+      this.showSpinner = true; // Show the spinner
+  
       this.captionService.search(this.searchText).subscribe(
         async (response: any) => {
-          this.search = true
-          this.searchResults = response // Assuming response is an array of search results
+          this.search = true;
+          this.searchResults = response; // Assuming response is an array of search results
+  
+          // Hide the spinner
+          this.showSpinner = false;
+  
           const toast = await this.toastController.create({
             message:
               '<h3>' +
@@ -132,16 +139,18 @@ export class HomePage {
               '</h3>',
             duration: 3000, // Adjust the duration as needed
             position: 'middle', // Set the toast position
-          })
-          toast.present()
+          });
+  
+          toast.present();
         },
         (error: any) => {
-          console.error('An error occurred while performing the search:', error)
-        },
-      )
+          console.error('An error occurred while performing the search:', error);
+          this.showSpinner = false; // Hide the spinner in case of an error
+        }
+      );
     }
   }
-
+  
   onFileChosen(event: Event) {
     const pickedFile = (event.target as HTMLInputElement).files[0]
     if (!pickedFile) {
