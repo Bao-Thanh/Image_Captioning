@@ -7,56 +7,48 @@ client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client["ImageCaption"]
 collection = db["search"]
 
-def search(input_caption):
-    documents = collection.find()
+# Create text index on the "caption" field
+collection.create_index([("caption", "text")])
 
-    caption = []
+# Create a TfidfVectorizer
+vectorizer = TfidfVectorizer()
 
+# Fit the vectorizer on all captions
+documents = collection.find()
+captions = [document["caption"] for document in documents]
+vectorizer.fit(captions)
+
+def search(input_caption, top_k=100):
+    input_vector = vectorizer.transform([input_caption])
+
+    # Perform text search using full-text index and limit the number of results
+    documents = collection.find({"$text": {"$search": input_caption}}).limit(top_k)
+
+    caption_scores = []
     for document in documents:
         _id = document["_id"]
         caption_text = document["caption"]
         url = document["url"]
 
-        caption_data = {
+        caption_vector = vectorizer.transform([caption_text])
+        similarity_score = cosine_similarity(input_vector, caption_vector)[0][0]
+        similarity_score_percent = round(similarity_score * 100, 2)
+
+        caption_scores.append({
             "_id": _id,
             "caption": caption_text,
+            "score": similarity_score_percent,
             "url": url
-        }
+        })
 
-        caption.append(caption_data)
-
-    def calculate_similarity_score(caption1, caption2):
-        # Create a TfidfVectorizer
-        vectorizer = TfidfVectorizer()
-
-        # Fit the vectorizer on the two captions
-        vectorizer.fit([caption1, caption2])
-
-        # Transform the captions to vectors
-        caption1_vector = vectorizer.transform([caption1])
-        caption2_vector = vectorizer.transform([caption2])
-
-        # Calculate the cosine similarity between the vectors
-        similarity_score = cosine_similarity(caption1_vector, caption2_vector)[0][0]
-
-        return round(similarity_score * 100, 2) 
-
-    for cap in caption:
-        cap["score"] = calculate_similarity_score(input_caption, cap["caption"])
-
-    sorted_caption_list = sorted(caption, key=lambda x: x["score"], reverse=True)
-
+    sorted_caption_scores = sorted(caption_scores, key=lambda x: x["score"], reverse=True)
     sorted_compare_caption_list_with_percent = [
         {
             "caption": cap["caption"],
             "score": f"{cap['score']}%",
             "url": cap["url"]
         }
-        for cap in sorted_caption_list if cap['score'] > 0
+        for cap in sorted_caption_scores if cap['score'] > 0
     ]
 
-    if len(sorted_compare_caption_list_with_percent) > 100:
-        sorted_compare_caption_list_with_percent = sorted_compare_caption_list_with_percent[:100]
-
     return sorted_compare_caption_list_with_percent
-
