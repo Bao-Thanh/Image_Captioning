@@ -1,6 +1,5 @@
 import pymongo
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 
@@ -31,7 +30,9 @@ def search(input_caption, top_k=100):
         url = document["url"]
 
         caption_vector = vectorizer.transform([caption_text])
-        similarity_score = cosine_similarity(input_vector, caption_vector)[0][0]
+
+        # Calculate the percentage similarity between the input caption and the caption in the document
+        similarity_score = (input_vector * caption_vector.T).A[0][0]
         similarity_score_percent = round(similarity_score * 100, 2)
 
         caption_scores.append({
