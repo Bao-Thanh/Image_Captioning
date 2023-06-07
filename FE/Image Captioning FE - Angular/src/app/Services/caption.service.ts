@@ -14,7 +14,6 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class CaptionService {
 
-  hostedUrl: any = 'https://fyp-image-caption-generator.herokuapp.com';
   localUrl: any = 'http://localhost:5000';
 
   constructor(
